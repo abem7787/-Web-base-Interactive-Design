@@ -77,4 +77,98 @@ class Connect {
     }
 
   }
+
+  onMove(evt) {
+    this.connectArea.destX = evt.clientX || evt.touches && evt.touches[0].pageX
+    this.connectArea.destY = evt.clientY || evt.touches && evt.touches[0].pageY
+  }
+
+  onLeave(evt) {
+    this.connectArea.destX = this.centerX
+    this.connectArea.destY = this.centerY
+  }
+
+  connectDots() {
+    for (let i = 0; i < this.dotCount; i++) {
+      for (let j = i + 1; j < this.dotCount; j++) {
+
+        let dot1 = this.dots[i]
+        let dot2 = this.dots[j]
+
+        let xDiff = Math.abs(dot1.x - dot2.x)
+        let yDiff = Math.abs(dot1.y - dot2.y)
+        let xDiffArea = Math.abs(dot1.x - this.connectArea.x)
+        let yDiffArea = Math.abs(dot1.y - this.connectArea.y)
+
+        if (xDiff < this.connectArea.maxConnectionLength && yDiff < this.connectArea.maxConnectionLength &&
+          xDiffArea < this.connectArea.connectAreaRadius && yDiffArea < this.connectArea.connectAreaRadius) {
+
+          let gradient = ctx.createLinearGradient(dot1.x, dot1.y, dot2.x, dot1.y)
+          gradient.addColorStop(0, dot1.color)
+          gradient.addColorStop(1, dot2.color)
+
+          ctx.beginPath()
+          ctx.moveTo(dot1.x, dot1.y)
+          ctx.lineTo(dot2.x, dot2.y)
+          ctx.strokeStyle = gradient
+          ctx.stroke()
+        }
+
+      }
+    }
+  }
+
+
 }
+
+let canvas = document.getElementById('connect')
+let ctx = canvas.getContext('2d')
+
+let connect = new Connect()
+
+canvas.onmousemove = (evt) => connect.onMove(evt)
+canvas.onmouseleave = (evt) => connect.onLeave(evt)
+canvas.ontouchstart = (evt) => connect.onMove(evt)
+canvas.ontouchmove = (evt) => connect.onLeave(evt)
+
+window.onresize = () => connect.resize()
+
+  ; (function update() {
+    requestAnimationFrame(update)
+    connect.update()
+
+  }());
+
+
+  /*This code appears to be a JavaScript implementation that creates a dynamic and interactive graphical effect on an HTML canvas. Let's break down the code and understand why it's used:
+
+  1. **Strict Mode:**
+     The code starts with `'use strict';`, which is a directive to enable strict mode in JavaScript. Strict mode helps catch common coding mistakes and "unsafe" actions, improving code quality and preventing potential bugs.
+  
+  2. **Constants and Math Functions:**
+     - `PI2` is a constant defined as twice the value of Math.PI, which is used for circular calculations.
+     - `map()` is a function that takes a value (`s`) and maps it from a range defined by `a1` and `a2` to a new range defined by `b1` and `b2`. This function is used to map values from one range to another, commonly used for scaling values.
+  
+  3. **Class Definitions:**
+     - `Connect` class: This class encapsulates the main functionality of the graphical effect. It manages the dots, connections between them, and their behavior.
+       - The constructor initializes various properties and settings related to the canvas, dots, and connection areas.
+       - The `resize()` method updates canvas and element sizes based on the window dimensions.
+       - `onMove()` and `onLeave()` methods handle mouse or touch movement and leave events, updating the destination coordinates of the connection area.
+       - `connectDots()` method connects dots with lines based on certain conditions.
+       - `update()` method orchestrates the animation loop, updating the dots and connections.
+     - `Dot` class: This class defines the characteristics and behavior of individual dots.
+       - The constructor initializes the properties of a dot, including its position, velocity, radius, and color.
+       - `draw()` method draws the dot on the canvas.
+       - `update()` method updates the position of the dot based on its velocity and ensures it bounces off canvas boundaries.
+  
+  4. **Canvas Setup and Interaction:**
+     - The code selects the canvas element and gets its 2D rendering context (`ctx`).
+     - An instance of the `Connect` class is created (`connect`), which manages the graphical effect.
+     - Event handlers are defined to handle mouse and touch interactions.
+     - A window resize event listener triggers the `resize()` method of the `Connect` instance.
+  
+  5. **Animation Loop:**
+     - The code defines a self-invoking function that serves as the animation loop using `requestAnimationFrame()`.
+     - Inside the loop, the `update()` method of the `Connect` instance is called to update the graphical effect.
+  
+  In summary, this code is used to create an interactive visual effect that involves dots moving around on an HTML canvas and connecting to each other within a defined area. The effect is responsive to mouse and touch interactions, and the dots' movement and connections create an aesthetic and dynamic display. This kind of code can be used for creative and artistic web-based projects, interactive designs, or simply to showcase a visually engaging animation on a webpage.*/
