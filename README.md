@@ -1,8 +1,6 @@
 #  Aesthetics & Interactive Design
 
 
-https://github.com/abem7787/-Web-base-Interactive-Design/assets/121057489/90ef501f-da5e-429e-a583-fdb11083828b
-
   In summary, this code is used to create an interactive visual effect that involves dots moving around on an HTML canvas and connecting to each other within a defined area. The effect is responsive to mouse and touch interactions, and the dots' movement and connections create an aesthetic and dynamic display. This kind of code can be used for creative and artistic web-based projects, interactive designs, or simply to showcase a visually engaging animation on a webpage.*/
 
   
@@ -34,3 +32,6 @@ https://github.com/abem7787/-Web-base-Interactive-Design/assets/121057489/90ef50
   5. **Animation Loop:**
      - The code defines a self-invoking function that serves as the animation loop using `requestAnimationFrame()`.
      - Inside the loop, the `update()` method of the `Connect` instance is called to update the graphical effect.
+
+
+https://github.com/abem7787/-Web-base-Interactive-Design/assets/121057489/ee374978-d346-41f1-9186-a149e899c6e0
