@@ -1,8 +1,8 @@
 #  Aesthetics & Interactive Design
 
-
   In summary, this code is used to create an interactive visual effect that involves dots moving around on an HTML canvas and connecting to each other within a defined area. The effect is responsive to mouse and touch interactions, and the dots' movement and connections create an aesthetic and dynamic display. This kind of code can be used for creative and artistic web-based projects, interactive designs, or simply to showcase a visually engaging animation on a webpage.*/
 
+https://github.com/abem7787/-Web-base-Interactive-Design/assets/121057489/ee374978-d346-41f1-9186-a149e899c6e0
   
 1. **Strict Mode:**
      The code starts with `'use strict';`, which is an authoritative instruction to enable strict mode in JavaScript. Strict mode helps catch common coding mistakes and "unsafe" actions, improving code quality and preventing potential bugs.
@@ -33,5 +33,3 @@
      - The code defines a self-invoking function that serves as the animation loop using `requestAnimationFrame()`.
      - Inside the loop, the `update()` method of the `Connect` instance is called to update the graphical effect.
 
-
-https://github.com/abem7787/-Web-base-Interactive-Design/assets/121057489/ee374978-d346-41f1-9186-a149e899c6e0
