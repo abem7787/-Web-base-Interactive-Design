@@ -118,6 +118,53 @@ class Connect {
     }
   }
 
+  update() {
+
+    ctx.globalCompositeOperation = 'hard-light'
+    ctx.fillStyle = 'rgba(20,20,20,0.2)'
+    ctx.fillRect(0, 0, this.width, this.height)
+
+    ctx.globalCompositeOperation = 'source-over'
+    //  ctx.clearRect(0, 0, this.width, this.height)
+
+    let distX = this.connectArea.destX - this.connectArea.x
+    if (distX > 5 || distX < 5) this.connectArea.x += distX / 10 | 0
+    let distY = this.connectArea.destY - this.connectArea.y
+    if (distX > 5 || distX < 5) this.connectArea.y += distY / 10 | 0
+
+    for (let i = 0; i < this.dotCount; i++) this.dots[i].update(this.bounds)
+    this.connectDots()
+
+
+    for (let i = 0; i < this.dotCount; i++) this.dots[i].draw()
+
+  }
+
+}
+
+class Dot {
+  constructor(width, height, color) {
+    this.x = Math.random() * width | 0
+    this.y = Math.random() * height | 0
+    this.vx = (Math.random() - 0.7) / 2
+    this.vy = (Math.random() - 0.7) / 2
+    this.radius = Math.random() * 2 + 0.3
+    this.color = 'hsla(' + color + ',80%,50%,' + this.radius * .5 + ')'
+  }
+
+  draw() {
+    ctx.beginPath()
+    ctx.fillStyle = this.color
+    ctx.arc(this.x, this.y, this.radius, 0, PI2)
+    ctx.fill()
+  }
+
+  update(bounds) {
+    if (this.y < bounds.top || this.y > bounds.bottom) this.vy = -this.vy
+    else if (this.x < bounds.left || this.x > bounds.right) this.vx = -this.vx
+    this.x += this.vx
+    this.y += this.vy
+  }
 
 }
 
@@ -140,35 +187,4 @@ window.onresize = () => connect.resize()
   }());
 
 
-  /*This code appears to be a JavaScript implementation that creates a dynamic and interactive graphical effect on an HTML canvas. Let's break down the code and understand why it's used:
 
-  1. **Strict Mode:**
-     The code starts with `'use strict';`, which is a directive to enable strict mode in JavaScript. Strict mode helps catch common coding mistakes and "unsafe" actions, improving code quality and preventing potential bugs.
-  
-  2. **Constants and Math Functions:**
-     - `PI2` is a constant defined as twice the value of Math.PI, which is used for circular calculations.
-     - `map()` is a function that takes a value (`s`) and maps it from a range defined by `a1` and `a2` to a new range defined by `b1` and `b2`. This function is used to map values from one range to another, commonly used for scaling values.
-  
-  3. **Class Definitions:**
-     - `Connect` class: This class encapsulates the main functionality of the graphical effect. It manages the dots, connections between them, and their behavior.
-       - The constructor initializes various properties and settings related to the canvas, dots, and connection areas.
-       - The `resize()` method updates canvas and element sizes based on the window dimensions.
-       - `onMove()` and `onLeave()` methods handle mouse or touch movement and leave events, updating the destination coordinates of the connection area.
-       - `connectDots()` method connects dots with lines based on certain conditions.
-       - `update()` method orchestrates the animation loop, updating the dots and connections.
-     - `Dot` class: This class defines the characteristics and behavior of individual dots.
-       - The constructor initializes the properties of a dot, including its position, velocity, radius, and color.
-       - `draw()` method draws the dot on the canvas.
-       - `update()` method updates the position of the dot based on its velocity and ensures it bounces off canvas boundaries.
-  
-  4. **Canvas Setup and Interaction:**
-     - The code selects the canvas element and gets its 2D rendering context (`ctx`).
-     - An instance of the `Connect` class is created (`connect`), which manages the graphical effect.
-     - Event handlers are defined to handle mouse and touch interactions.
-     - A window resize event listener triggers the `resize()` method of the `Connect` instance.
-  
-  5. **Animation Loop:**
-     - The code defines a self-invoking function that serves as the animation loop using `requestAnimationFrame()`.
-     - Inside the loop, the `update()` method of the `Connect` instance is called to update the graphical effect.
-  
-  In summary, this code is used to create an interactive visual effect that involves dots moving around on an HTML canvas and connecting to each other within a defined area. The effect is responsive to mouse and touch interactions, and the dots' movement and connections create an aesthetic and dynamic display. This kind of code can be used for creative and artistic web-based projects, interactive designs, or simply to showcase a visually engaging animation on a webpage.*/
